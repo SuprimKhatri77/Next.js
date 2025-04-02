@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Link from "next/link";
 
 type Props = {
     params: Promise<{ productId: string }>;
@@ -24,9 +25,9 @@ export default function ProductList() {
         <>
         <h1>Products List</h1>
         <ul>
-            <li>Product 1</li>
-            <li>Product 3</li>
-            <li>Product 2</li>
+            <Link href='products/1'>Product 1</Link>
+            <Link href='products/2'>Product 2</Link>
+            <Link href='products/3' replace>Product 3</Link>
         </ul>
         </>
     )
