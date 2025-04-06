@@ -19,7 +19,7 @@ async function getUsersPosts(userId: string){
 }
 async function getUsersAlbums(userId: string){
     await new Promise((resolve) => setTimeout(resolve,2000))
-    
+
     const response = await fetch(`https://jsonplaceholder.typicode.com/albums?userId=${userId}`)
     return response.json()
 }
