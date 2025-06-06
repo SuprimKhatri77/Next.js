@@ -2,15 +2,18 @@ export default function ComplexDashboardLayout({
     children,
     users,
     revenue,
-    notifications
+    notifications,
+    login
 } : {
     children : React.ReactNode;
     users : React.ReactNode;
     revenue : React.ReactNode;
     notifications : React.ReactNode;
+    login : React.ReactNode;
 }
 ){
-    return(
+    const isLoggedIn = true;
+    return isLoggedIn ? (
         <>
         <div className="mb-20">
         <div> {children} </div>
@@ -22,6 +25,10 @@ export default function ComplexDashboardLayout({
             <div className="flex flex-1 "> {notifications} </div>
         </div>
         </div>
+        </>
+    ) : (
+        <>
+        <div> {login} </div>
         </>
     )
 }

@@ -1,6 +1,3 @@
-
-import { Submit } from "@/components/Submit";
-import { FormState, createProduct } from "@/actions/Products";
 import { getProduct } from "@/app/primsa-db";
 import { Product } from "../page";
 import { notFound } from "next/navigation";

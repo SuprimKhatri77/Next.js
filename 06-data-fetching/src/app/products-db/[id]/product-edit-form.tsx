@@ -1,6 +1,5 @@
 "use client"
 
-import { Submit } from "@/components/Submit";
 import { useActionState } from "react";
 import { FormState, createProduct } from "@/actions/Products";
 import { Product } from "@/app/products-db/page";
