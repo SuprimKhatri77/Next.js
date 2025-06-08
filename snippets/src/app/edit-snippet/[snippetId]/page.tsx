@@ -1,16 +1,13 @@
 import { eq } from "drizzle-orm"
 import { db } from "../../../../lib/db"
-import { snippetTable, SnippetType } from "../../../../lib/db/schema"
-import SnippetPage from "./SnippetDetailPage"
+import { snippetTable } from "../../../../lib/db/schema"
+import EditForm from "../EditForm"
 
-
-
-export default async function SnippetDetailPage({ params }: { params: { snippetId: string } }) {
+export default async function EditSnippet({ params }: { params: { snippetId: string } }) {
     const { snippetId } = await params
     const [snippet] = await db.select().from(snippetTable).where(eq(snippetTable.snippetId, snippetId)).limit(1)
 
-
-    if (!snippet || !snippetId) {
+    if (!snippet) {
         return (
             <div className="min-h-screen flex justify-center items-center">
                 <h1 className="text-5xl font-bold">
@@ -20,6 +17,5 @@ export default async function SnippetDetailPage({ params }: { params: { snippetI
         )
     }
 
-
-    return <SnippetPage snippet={snippet} />
+    return <EditForm snippet={snippet} />
 }
