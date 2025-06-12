@@ -8,6 +8,8 @@ import { Input } from "../ui/input"
 import { useActionState, useEffect } from "react"
 import { SignUp } from "@/lib/actions"
 import { toast } from "sonner"
+import SignInSocial from '@/lib/auth/sign-in-social-auth'
+
 
 
 export default function SignUpForm() {
@@ -116,9 +118,8 @@ export default function SignUpForm() {
                     </div>
 
                     <div className="grid grid-cols-2 gap-3">
-                        <Button
-                            type="button"
-                            variant="outline">
+                        <SignInSocial
+                            provider="google">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="0.98em"
@@ -138,13 +139,12 @@ export default function SignUpForm() {
                                     d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0C79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"></path>
                             </svg>
                             <span className='pt-1'>Google</span>
-                        </Button>
-                        <Button
-                            type="button"
-                            variant="outline">
+                        </SignInSocial>
+                        <SignInSocial
+                            provider="github">
                             <Icons.gitHub />
                             <span className='pt-1'>Github</span>
-                        </Button>
+                        </SignInSocial>
                     </div>
                 </div>
 

@@ -9,6 +9,7 @@ import Link from 'next/link'
 import { useActionState, useEffect } from 'react'
 import { SignIn } from '@/lib/actions'
 import { toast } from 'sonner'
+import SignInSocial from '@/lib/auth/sign-in-social-auth'
 
 export default function LoginForm() {
     const initialState = { errorMessage: "" }
@@ -90,18 +91,16 @@ export default function LoginForm() {
                     </div>
 
                     <div className="grid grid-cols-2 gap-3">
-                        <Button
-                            type="button"
-                            variant="outline">
+                        <SignInSocial
+                            provider="google">
                             <Icons.google />
                             <span>Google</span>
-                        </Button>
-                        <Button
-                            type="button"
-                            variant="outline">
+                        </SignInSocial>
+                        <SignInSocial
+                            provider="github">
                             <Icons.gitHub />
                             <span>GitHub</span>
-                        </Button>
+                        </SignInSocial>
                     </div>
                 </div>
 
