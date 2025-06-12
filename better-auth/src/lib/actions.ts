@@ -3,6 +3,7 @@
 import { APIError } from "better-auth/api";
 import { auth } from "./auth/auth";
 import { redirect } from "next/navigation";
+import { db } from "./prisma";
 
 interface State {
   errorMessage?: string | null;
@@ -70,4 +71,12 @@ export async function SignUp(prevState: State, formData: FormData) {
     }
   }
   redirect("/dashboard");
+}
+
+export async function searchAccount(email: string) {
+  const user = await db.user.findUnique({
+    where: { email },
+  });
+
+  return !!user;
 }

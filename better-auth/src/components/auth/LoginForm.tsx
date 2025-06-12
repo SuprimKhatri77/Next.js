@@ -65,9 +65,9 @@ export default function LoginForm() {
                                     variant="link"
                                     size="sm">
                                     <Link
-                                        href="#"
+                                        href="/login/forgot-account"
                                         className="link intent-info variant-ghost text-sm">
-                                        Forgot your Password ?
+                                        Forgot your Account ?
                                     </Link>
                                 </Button>
                             </div>
