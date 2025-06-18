@@ -5,15 +5,17 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { addSnippet, type FormState } from "../../../action/snippet"
+import { UploadButton } from "@/utils/uploadthing"
 
 export default function CreateNewSnippet() {
-    const initialState: FormState = {
-        errors: {},
-    }
+    const initialState: FormState = { errors: {} }
+    const [uploadedFileUrl, setUploadedFileUrl] = useState("")
     const [successMessage, setSuccessMessage] = useState("")
     const [showSuccess, setShowSuccess] = useState(false)
-    const [state, formAction, isPending] = useActionState<FormState, FormData>(addSnippet, initialState)
-
+    const [state, formAction, isPending] = useActionState<FormState, FormData>(
+        addSnippet,
+        initialState
+    )
     const lastSuccessRef = useRef<string | null>(null)
 
     useEffect(() => {
@@ -44,31 +46,66 @@ export default function CreateNewSnippet() {
             >
                 <h1 className="text-4xl font-bold text-center">Snippet Form</h1>
 
+                {/* Title */}
                 <div className="flex flex-col justify-center gap-2">
                     <div className="flex gap-5 items-center">
                         <label htmlFor="title" className="text-xl font-medium">
                             Title:
                         </label>
-                        <Input type="text" id="title" name="title" placeholder="snippet title" />
+                        <Input type="text" id="title" name="title" placeholder="Snippet title" />
                     </div>
-                    {state.errors?.title && <p className="text-sm text-red-400 text-left pl-18">{state.errors.title}</p>}
+                    {state.errors?.title && (
+                        <p className="text-sm text-red-400 text-left pl-18">{state.errors.title}</p>
+                    )}
                 </div>
 
+                {/* Code */}
                 <div className="flex flex-col justify-center gap-2">
                     <div className="flex gap-5 items-center">
                         <label htmlFor="code" className="text-xl font-medium">
                             Code:
                         </label>
-                        <Textarea id="code" name="code" placeholder="your snippet code" />
+                        <Textarea id="code" name="code" placeholder="Your snippet code" />
                     </div>
-                    {state.errors?.code && <p className="text-sm text-red-400 text-left pl-18">{state.errors.code}</p>}
+                    {state.errors?.code && (
+                        <p className="text-sm text-red-400 text-left pl-18">{state.errors.code}</p>
+                    )}
                 </div>
 
+                {/* Upload Button */}
+                <div className="flex flex-col gap-2">
+                    <label className="text-xl font-medium">Image:</label>
+                    <div onClick={(e) => e.stopPropagation()}>
+                        <UploadButton
+                            endpoint="imageUploader"
+                            onClientUploadComplete={(res) => {
+                                const url = res[0]?.ufsUrl ?? ""
+                                // const url = `https://ne9n0za5cn.ufs.sh/${key}`
+                                setUploadedFileUrl(url)
+                                alert("Upload Completed")
+                            }}
+                            onUploadError={(error: Error) => {
+                                alert(`ERROR! ${error.message}`)
+                            }}
+                            appearance={{
+                                button:
+                                    "bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors duration-200",
+                                container: "flex items-center gap-2",
+                            }}
+                        />
+                    </div>
+
+                    {/* Hidden input for uploaded URL */}
+                    <input type="hidden" name="imageUrl" value={uploadedFileUrl} />
+                </div>
+
+                {/* Submit Button */}
                 <Button className="cursor-pointer" type="submit" disabled={isPending}>
-                    {!isPending ? "Create" : "Creating......"}
+                    {!isPending ? "Create" : "Creating..."}
                 </Button>
             </form>
 
+            {/* Success Toast */}
             <div className="fixed top-4 right-4 z-50">
                 <div
                     className={`

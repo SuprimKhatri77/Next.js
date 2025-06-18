@@ -11,6 +11,7 @@ export type FormState = {
   errors?: {
     title?: string[];
     code?: string[];
+    imageUrl?: string[];
   };
   message?: string | null;
   success?: boolean;
@@ -22,13 +23,15 @@ const SnippetSchema = z.object({
     .string()
     .min(1, "Title is required")
     .max(255, "Title cannot exceed more than 255 words"),
-  code: z.string().min(1, "Snippet code is necessary"),
+  code: z.string().min(1, "Snippet is required"),
+  imageUrl: z.string(),
 });
 
 export async function addSnippet(prevState: FormState, formData: FormData) {
   const validateFields = SnippetSchema.safeParse({
     title: formData.get("title"),
     code: formData.get("code"),
+    imageUrl: formData.get("imageUrl"),
   });
 
   if (!validateFields.success) {
@@ -38,12 +41,13 @@ export async function addSnippet(prevState: FormState, formData: FormData) {
     };
   }
 
-  const { title, code } = validateFields.data;
+  const { title, code, imageUrl } = validateFields.data;
 
   try {
     await db.insert(snippetTable).values({
       title,
       code,
+      imageUrl,
     });
     revalidatePath("/");
     return {

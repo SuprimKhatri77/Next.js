@@ -12,6 +12,7 @@ export const snippetTable = pgTable("snippet_table", {
   snippetId: uuid("snippet_id").primaryKey().defaultRandom(),
   title: varchar({ length: 255 }).notNull(),
   code: text("code").notNull(),
+  imageUrl: text("image_url"),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });

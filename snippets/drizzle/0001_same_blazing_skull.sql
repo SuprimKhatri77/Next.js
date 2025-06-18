@@ -1,0 +1,1 @@
+ALTER TABLE "snippet_table" ADD COLUMN "image_url" text;

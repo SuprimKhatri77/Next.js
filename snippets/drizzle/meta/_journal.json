@@ -8,6 +8,13 @@
       "when": 1749280306149,
       "tag": "0000_misty_steel_serpent",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1750243017249,
+      "tag": "0001_same_blazing_skull",
+      "breakpoints": true
     }
   ]
 }
