@@ -14,6 +14,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 import { auth } from "@/lib/auth/auth"
+import { db } from "@/lib/prisma"
 import { headers } from "next/headers"
 
 export default async function Page() {
@@ -21,9 +22,22 @@ export default async function Page() {
     headers: await headers()
   })
 
+
   if (!session) {
     return <div>Not authenticated!</div>
   }
+  const isVerified = db.user.findFirst({
+    where: {
+      email: session.user.email
+    },
+    select: {
+      emailVerified: true
+    }
+
+
+
+
+  })
   return (
     <SidebarProvider>
       <AppSidebar />

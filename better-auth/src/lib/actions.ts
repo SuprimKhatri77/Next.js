@@ -70,7 +70,7 @@ export async function SignUp(prevState: State, formData: FormData) {
       }
     }
   }
-  redirect("/dashboard");
+  redirect(`/sign-up/verify-email?email=${encodeURIComponent(email)}`);
 }
 
 export async function searchAccount(email: string) {

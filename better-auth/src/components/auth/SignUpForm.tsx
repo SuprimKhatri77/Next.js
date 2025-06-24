@@ -5,16 +5,27 @@ import { Icons } from "../icons"
 import { Button } from "../ui/button"
 import { Label } from "../ui/label"
 import { Input } from "../ui/input"
-import { useActionState, useEffect } from "react"
+import { useActionState, useEffect, useState } from "react"
 import { SignUp } from "@/lib/actions"
 import { toast } from "sonner"
 import SignInSocial from '@/lib/auth/sign-in-social-auth'
+import { sendVerificationEmail } from "@/lib/auth/auth-client"
 
 
 
 export default function SignUpForm() {
     const initialState = { errorMessage: "" }
     const [state, formAction, isPending] = useActionState(SignUp, initialState)
+    const [email, setEmail] = useState("")
+
+    const handleClick = async () => {
+        await sendVerificationEmail({
+            email,
+            callbackURL: "/dashboard"
+        })
+    }
+
+
 
     useEffect(() => {
         if (state.errorMessage.length) {
@@ -27,6 +38,10 @@ export default function SignUpForm() {
                 action={formAction}
                 className="bg-muted m-auto h-fit w-full max-w-sm overflow-hidden rounded-[calc(var(--radius)+.125rem)] border shadow-md shadow-zinc-950/5 dark:[--color-muted:var(--color-zinc-900)]">
                 <div className="bg-card -m-px rounded-[calc(var(--radius)+.125rem)] border p-8 pb-6">
+                    {isPending && (
+
+                        <p className="text-lg font-medium text-red-500">Please check your email and verify it!</p>
+                    )}
                     <div className="">
                         <Link
                             href="/"
@@ -78,6 +93,7 @@ export default function SignUpForm() {
                                 required
                                 name="email"
                                 id="email"
+                                onChange={(e) => setEmail(e.target.value)}
                             />
                         </div>
 
@@ -108,7 +124,7 @@ export default function SignUpForm() {
                             />
                         </div>
 
-                        <Button className="w-full" disabled={isPending} aria-disabled={isPending}>Sign In</Button>
+                        <Button className="w-full" disabled={isPending} aria-disabled={isPending} onClick={handleClick}>Sign In</Button>
                     </div>
 
                     <div className="my-6 grid grid-cols-[1fr_auto_1fr] items-center gap-3">
